@@ -3,20 +3,36 @@ package com.example.a3dfliping
 import android.animation.Animator
 import android.animation.Animator.AnimatorListener
 import android.view.View
-import android.view.animation.Animation.AnimationListener
 
 
-fun moveView(viewToBeMoved: View, targetView: View) {
+fun moveView(
+    viewToBeMoved: View,
+    targetView: View,
+    duration: Long = 2000L,
+    onAnimationEnd: (() -> Unit)? = null
+) {
     val targetX: Float =
         targetView.x + targetView.width / 2 - viewToBeMoved.width / 2
     val targetY: Float =
         targetView.y + targetView.height / 2 - viewToBeMoved.height / 2
 
-    viewToBeMoved.animate()
+    val animation = viewToBeMoved.animate()
         .x(targetX)
         .y(targetY)
-        .setDuration(2000)
-        .start()
+        .setDuration(duration)
+
+    onAnimationEnd?.let {
+        animation.setListener(object : AnimatorListener {
+            override fun onAnimationStart(animation: Animator?) {}
+            override fun onAnimationEnd(animation: Animator?) {
+                onAnimationEnd.invoke()
+            }
+            override fun onAnimationCancel(animation: Animator?) {}
+            override fun onAnimationRepeat(animation: Animator?) {}
+        })
+    }
+
+    animation.start()
 }
 
 fun View.slideFromLeft(

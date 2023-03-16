@@ -5,6 +5,8 @@ import android.animation.Animator.AnimatorListener
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
+import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.a3dfliping.databinding.LayoutCompeteMilestoneFullViewBinding
 
@@ -19,17 +21,17 @@ class CompeteMieStoneFullView @JvmOverloads constructor(
     init {
         binding = LayoutCompeteMilestoneFullViewBinding.inflate(LayoutInflater.from(context), this)
         listeners()
-        slideImageFromLeftAndRight()
     }
 
-    fun listeners() {
+    var onSlideAnimationEnd: (() -> Unit)? = null
+
+    private fun listeners() {
         binding.lottieView.addAnimatorListener(object : AnimatorListener {
             override fun onAnimationStart(animation: Animator?) {
             }
 
             override fun onAnimationEnd(animation: Animator?) {
-                binding.imageView1.slideToTop(200f, 1000, false)
-                binding.imageView2.slideToTop(200f, 1000, false)
+                onSlideAnimationEnd?.invoke()
             }
 
             override fun onAnimationCancel(animation: Animator?) {
@@ -41,21 +43,32 @@ class CompeteMieStoneFullView @JvmOverloads constructor(
         })
     }
 
-    private fun slideImageFromLeftAndRight() {
-        with(binding) {
-            imageView1.slideFromLeft(200f, 1000, true, onAnimationEnd = {
+    fun setData(data: Data, onSlideAnimationEnd: (() -> Unit)? = null) {
+        this.onSlideAnimationEnd = onSlideAnimationEnd
+        binding.milestoneAvatarView.setData(
+            data = CompeteMilestoneAvatarView.Data(
+                leftImage = data.leftImage,
+                rightImage = data.rightImage,
+                showTransitionAnimation = true
+            ),
+            onSlideAnimationEnd = {
                 binding.lottieView.playAnimation()
-            })
-
-            imageView2.slideFromRight(200f, 1000, true)
-        }
+            }
+        )
     }
 
+    fun slideAvatarViewToTargetView(targetView: View, onSlideAnimationEnd: (() -> Unit)?) {
+        moveView(binding.milestoneAvatarView, targetView, 2000L, onSlideAnimationEnd)
+    }
 
     override fun onDetachedFromWindow() {
+        onSlideAnimationEnd = null
         binding.lottieView.cancelAnimation()
-        binding.imageView1.clearAnimation()
-        binding.imageView2.clearAnimation()
         super.onDetachedFromWindow()
     }
+
+    data class Data(
+        @DrawableRes val leftImage: Int,
+        @DrawableRes val rightImage: Int
+    )
 }

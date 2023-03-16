@@ -3,30 +3,36 @@ package com.example.a3dfliping
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.example.a3dfliping.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var image: Compete3dFlippingImageView
-    private lateinit var clickBtn: Button
-
+    lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        clickBtn = findViewById(R.id.button1)
-        image = findViewById(R.id.imageView1)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        image.setData(
-            Compete3dFlippingImageView.Data(
-                initialFlippingImage = R.drawable.ic_compete_beginner,
-                endFlippingImage = R.drawable.ic_compete_advanced,
-                durationPerFlip = 800,
-                flippingCount = 6
-            )
+        val avatarViewData = CompeteMilestoneAvatarView.Data(
+            leftImage = R.drawable.ic_compete_beginner,
+            rightImage = R.drawable.ic_compete_advanced
         )
 
-        clickBtn.setOnClickListener {
+        binding.cardMileStoneAvatarView.setData(avatarViewData.copy(showTransitionAnimation = false))
 
-        }
+        binding.mileStoneFullView.setData(
+            data = CompeteMieStoneFullView.Data(
+                leftImage = avatarViewData.leftImage,
+                rightImage = avatarViewData.rightImage
+            ),
+            onSlideAnimationEnd = {
+                binding.mileStoneFullView.slideAvatarViewToTargetView(
+                    targetView = binding.cardMileStoneAvatarView,
+                    onSlideAnimationEnd = {
+                        binding.mileStoneFullView.hide()
+                    })
+            }
+        )
     }
 }

@@ -6,46 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="378dp"
+        android:background="#171717"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
+        <com.example.a3dfliping.CompeteMilestoneAvatarView
+            android:id="@+id/cardMileStoneAvatarView"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dip"
-            android:text="Simulate a 3D Flip"
-            android:textColor="#000"
-            android:textSize="26sp"
-            android:textStyle="bold" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.example.a3dfliping.Compete3dFlippingImageView
-            android:id="@+id/imageView1"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:src="@drawable/ic_compete_beginner" />
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dip"
-            android:padding="10dip"
-            android:text="Hit Me!" />
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.example.a3dfliping.CompeteMieStoneFullView
-        android:id="@+id/imageView3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/mileStoneFullView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#171717"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
