@@ -62,29 +62,6 @@ class Compete3dFlippingImageView @JvmOverloads constructor(
         this.flipAnimationListener = flipAnimationListener
     }
 
-
-    data class Data(
-        @DrawableRes val initialFlippingImage: Int,
-        @DrawableRes val endFlippingImage: Int,
-        val flippingCount: Int = DEFAULT_FLIP_COUNT,
-        val durationPerFlip: Long = DEFAULT_FLIP_DURATION
-    )
-
-
-    interface FlipAnimationListener {
-        fun onAnimationStart()
-        fun onAnimationEnd()
-    }
-
-    private fun getHalfFlipDuration() = (data?.durationPerFlip ?: DEFAULT_FLIP_DURATION).div(2)
-
-    private fun getFlipCount() = data?.flippingCount ?: DEFAULT_FLIP_COUNT
-
-    companion object {
-        private const val DEFAULT_FLIP_DURATION = 300L
-        private const val DEFAULT_FLIP_COUNT = 2
-    }
-
     private var loadingCount = 0
     private var isAnimationEnded = false
 
@@ -143,4 +120,23 @@ class Compete3dFlippingImageView @JvmOverloads constructor(
 
     override fun onAnimationRepeat(animation: Animation?) {}
     override fun onAnimationStart(animation: Animation?) {}
+    private fun getHalfFlipDuration() = (data?.durationPerFlip ?: DEFAULT_FLIP_DURATION).div(2)
+    private fun getFlipCount() = data?.flippingCount ?: DEFAULT_FLIP_COUNT
+
+    data class Data(
+        @DrawableRes val initialFlippingImage: Int,
+        @DrawableRes val endFlippingImage: Int,
+        val flippingCount: Int = DEFAULT_FLIP_COUNT,
+        val durationPerFlip: Long = DEFAULT_FLIP_DURATION
+    )
+
+    interface FlipAnimationListener {
+        fun onAnimationStart()
+        fun onAnimationEnd()
+    }
+
+    companion object {
+        private const val DEFAULT_FLIP_DURATION = 300L
+        private const val DEFAULT_FLIP_COUNT = 2
+    }
 }
