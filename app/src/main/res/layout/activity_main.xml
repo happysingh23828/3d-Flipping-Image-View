@@ -26,7 +26,7 @@
             android:textSize="26sp"
             android:textStyle="bold" />
 
-        <ImageView
+        <com.example.a3dfliping.Compete3dFlippingImageView
             android:id="@+id/imageView1"
             android:layout_width="300dp"
             android:layout_height="300dp"
