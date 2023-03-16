@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         clickBtn.setOnClickListener {
-            image.startAnimation()
+
         }
     }
 }
